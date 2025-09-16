@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import StepForm from '@/components/resume-builder/StepForm';
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { AlertCircle, FileText, User, Sparkles, Download, Save, Edit3, CheckCircle, ArrowRight, X } from "lucide-react";
+import { AlertCircle, FileText, User, Sparkles, Download, Save, CheckCircle, ArrowRight, X } from "lucide-react";
 import { useState } from "react";
 
 export default function ResumeBuilderPage() {
@@ -26,12 +26,10 @@ export default function ResumeBuilderPage() {
     );
   }
 
-  // If the user is not signed in and hasn't chosen to proceed
   if (!session && !proceedWithoutSignIn) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
         <div className="container max-w-4xl mx-auto">
-          {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center p-3 bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm mb-6 dark:bg-gray-800/80">
               <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-3 rounded-full">
@@ -47,7 +45,6 @@ export default function ResumeBuilderPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            {/* Benefits Panel */}
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-100 dark:border-gray-700">
               <h2 className="text-2xl font-semibold mb-6 flex items-center gap-3">
                 <Sparkles className="h-6 w-6 text-blue-600" />
@@ -60,7 +57,7 @@ export default function ResumeBuilderPage() {
                     <Save className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">Save & Access Anywhere</h3>
+                    <h3 className="font-semibold">Save &amp; Access Anywhere</h3>
                     <p className="text-sm text-muted-foreground mt-1">Your resumes are securely stored in the cloud</p>
                   </div>
                 </div>
@@ -84,8 +81,6 @@ export default function ResumeBuilderPage() {
                     <p className="text-sm text-muted-foreground mt-1">Create different versions for various jobs</p>
                   </div>
                 </div>
-
-
               </div>
 
               <Button
@@ -102,7 +97,6 @@ export default function ResumeBuilderPage() {
               </p>
             </div>
 
-            {/* Continue Without Account Panel */}
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-100 dark:border-gray-700 max-w-xl mx-auto">
               <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700/50 rounded-xl p-5 mb-6 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
                 <div className="flex items-start gap-3">
@@ -122,7 +116,7 @@ export default function ResumeBuilderPage() {
               <ul className="space-y-3 mb-6">
                 <li className="flex items-center gap-3 text-sm text-red-600 dark:text-red-400">
                   <X className="h-4 w-4" />
-                  <span>Resume won't be saved</span>
+                  <span>Resume won&apos;t be saved</span>
                 </li>
                 <li className="flex items-center gap-3 text-sm text-red-600 dark:text-red-400">
                   <X className="h-4 w-4" />
@@ -153,15 +147,11 @@ export default function ResumeBuilderPage() {
               </p>
             </div>
           </div>
-
-         
-         
         </div>
       </div>
     );
   }
 
-  // If the user is signed in or chose to proceed without signing in
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-blue-50/30 dark:from-gray-900 dark:to-gray-800">
       {!session && (

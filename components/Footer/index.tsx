@@ -1,15 +1,12 @@
 "use client";
 
-import { Heart } from "lucide-react";
-import Link from "next/link";
+import Link from "next/link"; // removed Heart import
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
     <>
-      
-      
       {/* Footer */}
       <footer className="bg-gray-900 text-gray-400 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

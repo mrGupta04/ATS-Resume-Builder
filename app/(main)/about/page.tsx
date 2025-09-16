@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+// Removed unused Badge import
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Zap, Palette, Download } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ export default function AboutPage() {
               Revolutionizing Resume Creation
             </h1>
             <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-              We combine cutting-edge AI technology with elegant design to help you create professional resumes that stand out in today's competitive job market.
+              We combine cutting-edge AI technology with elegant design to help you create professional resumes that stand out in today&apos;s competitive job market.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -63,7 +63,7 @@ export default function AboutPage() {
               <div className="text-sm text-muted-foreground">Templates</div>
             </div>
             <div className="space-y-2">
-              <div className="text-3xl font-bold text-pink-600 dark:text-pink-400">Use AI Assitance</div>
+              <div className="text-3xl font-bold text-pink-600 dark:text-pink-400">Use AI Assistance</div>
               <div className="text-sm text-muted-foreground">To Optimise Resume</div>
             </div>
           </div>
@@ -76,7 +76,7 @@ export default function AboutPage() {
           <div className="max-w-2xl mx-auto text-center mb-16">
             <h2 className="text-3xl font-bold mb-4">Why Choose Our Resume Builder</h2>
             <p className="text-muted-foreground">
-              We've reimagined resume creation with a focus on effectiveness, aesthetics, and user experience.
+              We&apos;ve reimagined resume creation with a focus on effectiveness, aesthetics, and user experience.
             </p>
           </div>
 

@@ -17,8 +17,6 @@ import {
   Globe,
   ChevronLeft,
   ChevronRight,
-  Star,
-  Users,
   Target,
   Zap,
   Eye,
@@ -32,6 +30,7 @@ import {
   RotateCcw,
   Move,
 } from "lucide-react";
+
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import Link from "next/link";

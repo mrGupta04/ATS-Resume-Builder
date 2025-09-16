@@ -107,7 +107,7 @@ export function AIFeaturesSection() {
                 <h3 className="text-2xl font-bold">AI-Powered Resume Parsing</h3>
               </div>
               <p className="text-muted-foreground pl-11">
-                Instantly extract information from your existing resume with our advanced AI parsing technology. No need to start from scratch—we'll handle the heavy lifting.
+                Instantly extract information from your existing resume with our advanced AI parsing technology. No need to start from scratch—we&apos;ll handle the heavy lifting.
               </p>
             </div>
 
@@ -115,8 +115,7 @@ export function AIFeaturesSection() {
               <CardContent className="p-6 flex flex-col flex-grow">
                 <div
                   className={`relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300 flex-grow flex flex-col justify-center group
-                  ${
-                    isDragging
+                  ${isDragging
                       ? "border-primary bg-primary/10 scale-[1.02]"
                       : "border-muted-foreground/20 hover:border-primary/50 hover:bg-primary/5"
                   }`}
@@ -283,7 +282,7 @@ export function AIFeaturesSection() {
             </div>
             <h3 className="font-semibold text-lg mb-2">Smart Suggestions</h3>
             <p className="text-muted-foreground text-sm">
-              Get real-time suggestions to improve your resume's impact and readability as you type.
+              Get real-time suggestions to improve your resume&apos;s impact and readability as you type.
             </p>
           </div>
         </div>

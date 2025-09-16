@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { Loader2, Lock, Shield, FileText, Sparkles } from "lucide-react";
+import { Lock, Shield, FileText, Sparkles } from "lucide-react"; // removed Loader2
 
 export default function SignIn() {
   const { data: session, status } = useSession();
@@ -23,7 +23,6 @@ export default function SignIn() {
             const data = docSnap.data();
             console.log(data);
 
-            // Also set to localStorage as backup
             localStorage.setItem('resumeitnow_name', data.displayName);
             localStorage.setItem('resumeitnow_template', data.defaultTemplate);
           }
