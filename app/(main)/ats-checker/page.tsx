@@ -8,7 +8,6 @@ import { Progress } from "@/components/ui/progress";
 import { Upload, CheckCircle, AlertCircle, ArrowLeft, Loader2, FileText, Target, Zap, BarChart3, Download } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-// Maximum file size: 5MB in bytes
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 export default function ATSCheckerPage() {
@@ -19,103 +18,59 @@ export default function ATSCheckerPage() {
     keywords: string[];
     suggestions: string[];
   } | null>(null);
-  
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  
-  // Handle file selection via input
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    
     if (!file) return;
-    
+
     if (file.type !== "application/pdf") {
-      toast({
-        title: "Invalid File",
-        description: "Please upload a valid PDF resume!",
-        duration: 3000,
-        variant: "destructive",
-      });
+      toast({ title: "Invalid File", description: "Please upload a valid PDF resume!", duration: 3000, variant: "destructive" });
       return;
     }
-    
+
     if (file.size > MAX_FILE_SIZE) {
-      toast({
-        title: "File Too Large",
-        description: "Maximum file size is 5MB.",
-        duration: 3000,
-        variant: "destructive",
-      });
+      toast({ title: "File Too Large", description: "Maximum file size is 5MB.", duration: 3000, variant: "destructive" });
       return;
     }
-    
+
     setPdfFile(file);
-    toast({
-      title: "File Selected",
-      description: `${file.name} selected successfully!`,
-      duration: 3000,
-    });
+    toast({ title: "File Selected", description: `${file.name} selected successfully!`, duration: 3000 });
   };
 
-  // Handle drag-and-drop
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    
     const file = e.dataTransfer.files?.[0];
-    
     if (!file) return;
-    
+
     if (file.type !== "application/pdf") {
-      toast({
-        title: "Invalid File",
-        description: "Please drop a valid PDF resume!",
-        duration: 3000,
-        variant: "destructive",
-      });
+      toast({ title: "Invalid File", description: "Please drop a valid PDF resume!", duration: 3000, variant: "destructive" });
       return;
     }
-    
+
     if (file.size > MAX_FILE_SIZE) {
-      toast({
-        title: "File Too Large",
-        description: "Maximum file size is 5MB.",
-        duration: 3000,
-        variant: "destructive",
-      });
+      toast({ title: "File Too Large", description: "Maximum file size is 5MB.", duration: 3000, variant: "destructive" });
       return;
     }
-    
+
     setPdfFile(file);
-    toast({
-      title: "File Uploaded",
-      description: `${file.name} uploaded successfully!`,
-      duration: 3000,
-    });
+    toast({ title: "File Uploaded", description: `${file.name} uploaded successfully!`, duration: 3000 });
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  };
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!pdfFile) {
-      toast({
-        title: "No Resume",
-        description: "Please upload a resume PDF!",
-        duration: 3000,
-        variant: "destructive",
-      });
+      toast({ title: "No Resume", description: "Please upload a resume PDF!", duration: 3000, variant: "destructive" });
       return;
     }
 
     setLoading(true);
     setSubmitted(true);
-    
-    // Simulate API call with timeout
+
     setTimeout(() => {
-      // Mock result data
       setResult({
         score: 72,
         keywords: ["React", "TypeScript", "Node.js", "UI/UX", "Agile", "REST API", "Problem Solving"],
@@ -127,11 +82,7 @@ export default function ATSCheckerPage() {
         ]
       });
       setLoading(false);
-      toast({
-        title: "Success",
-        description: "ATS check completed!",
-        duration: 3000,
-      });
+      toast({ title: "Success", description: "ATS check completed!", duration: 3000 });
     }, 2500);
   };
 
@@ -142,56 +93,39 @@ export default function ATSCheckerPage() {
     setJobDescription("");
   };
 
-  // Get score color based on value
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return "text-green-600";
-    if (score >= 60) return "text-amber-600";
-    return "text-red-600";
-  };
+  const getScoreColor = (score: number) => (score >= 80 ? "text-green-600" : score >= 60 ? "text-amber-600" : "text-red-600");
+  const getScoreBadgeColor = (score: number) => (score >= 80 ? "bg-green-100 text-green-800 border-green-200" : score >= 60 ? "bg-amber-100 text-amber-800 border-amber-200" : "bg-red-100 text-red-800 border-red-200");
+  const getProgressColor = (score: number) => (score >= 80 ? "bg-green-500" : score >= 60 ? "bg-amber-400" : "bg-red-400");
 
-  // Get score badge color
-  const getScoreBadgeColor = (score: number) => {
-    if (score >= 80) return "bg-green-100 text-green-800 border-green-200";
-    if (score >= 60) return "bg-amber-100 text-amber-800 border-amber-200";
-    return "bg-red-100 text-red-800 border-red-200";
-  };
-
-  // Handle download report
   const handleDownloadReport = () => {
     if (!result) return;
-    
-    // Create a simple text report
+
     const report = `
-      ATS Resume Checker Report
-      =========================
-      
-      Score: ${result.score}%
-      
-      Matched Keywords:
-      ${result.keywords.map(keyword => `• ${keyword}`).join('\n')}
-      
-      Suggestions for Improvement:
-      ${result.suggestions.map(suggestion => `• ${suggestion}`).join('\n')}
-      
-      Generated on: ${new Date().toLocaleDateString()}
+ATS Resume Checker Report
+=========================
+
+Score: ${result.score}%
+
+Matched Keywords:
+${result.keywords.map(k => `• ${k}`).join("\n")}
+
+Suggestions for Improvement:
+${result.suggestions.map(s => `• ${s}`).join("\n")}
+
+Generated on: ${new Date().toLocaleDateString()}
     `;
-    
-    // Create a blob and download link
-    const blob = new Blob([report], { type: 'text/plain' });
+
+    const blob = new Blob([report], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = `ATS-Report-${new Date().getTime()}.txt`;
+    a.download = `ATS-Report-${Date.now()}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    
-    toast({
-      title: "Report Downloaded",
-      description: "Your ATS report has been downloaded successfully!",
-      duration: 3000,
-    });
+
+    toast({ title: "Report Downloaded", description: "Your ATS report has been downloaded successfully!", duration: 3000 });
   };
 
   return (
@@ -213,7 +147,7 @@ export default function ATSCheckerPage() {
             Beta - Experimental Feature
           </div>
         </div>
-        
+
         {!submitted ? (
           // Upload Form
           <Card className="shadow-lg border-0 overflow-hidden">
@@ -229,7 +163,6 @@ export default function ATSCheckerPage() {
             </CardHeader>
             <CardContent className="pt-2">
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* File Drop Zone */}
                 <div>
                   <label htmlFor="resume" className="block text-sm font-medium mb-2 text-foreground">
                     Upload Resume (PDF, max 5MB)
@@ -257,17 +190,10 @@ export default function ATSCheckerPage() {
                     <p className="text-xs text-muted-foreground">
                       {pdfFile ? `${(pdfFile.size / (1024 * 1024)).toFixed(2)} MB` : "PDF files only (max 5MB)"}
                     </p>
-                    <Input
-                      id="resume"
-                      type="file"
-                      accept=".pdf"
-                      onChange={handleFileChange}
-                      className="hidden"
-                    />
+                    <Input id="resume" type="file" accept=".pdf" onChange={handleFileChange} className="hidden" />
                   </div>
                 </div>
 
-                {/* Job Description Textarea */}
                 <div>
                   <label htmlFor="jobDescription" className="block text-sm font-medium mb-2 text-foreground">
                     Job Description (Optional)
@@ -292,13 +218,7 @@ export default function ATSCheckerPage() {
                   </div>
                 </div>
 
-                {/* Submit Button */}
-                <Button 
-                  type="submit" 
-                  disabled={loading || !pdfFile} 
-                  className="w-full py-3 text-base font-medium relative overflow-hidden"
-                  size="lg"
-                >
+                <Button type="submit" disabled={loading || !pdfFile} className="w-full py-3 text-base font-medium relative overflow-hidden" size="lg">
                   {loading ? (
                     <>
                       <Loader2 className="w-5 h-5 mr-2 animate-spin" />
@@ -311,22 +231,6 @@ export default function ATSCheckerPage() {
                     </>
                   )}
                 </Button>
-                
-                {/* Info Tips */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-4">
-                  <div className="flex items-start gap-2 text-xs text-muted-foreground p-2 rounded-lg bg-slate-100 dark:bg-slate-800/50">
-                    <FileText className="w-3 h-3 mt-0.5 flex-shrink-0" />
-                    <span>We analyze formatting, keywords, and structure</span>
-                  </div>
-                  <div className="flex items-start gap-2 text-xs text-muted-foreground p-2 rounded-lg bg-slate-100 dark:bg-slate-800/50">
-                    <CheckCircle className="w-3 h-3 mt-0.5 flex-shrink-0" />
-                    <span>Get personalized improvement suggestions</span>
-                  </div>
-                  <div className="flex items-start gap-2 text-xs text-muted-foreground p-2 rounded-lg bg-slate-100 dark:bg-slate-800/50">
-                    <AlertCircle className="w-3 h-3 mt-0.5 flex-shrink-0" />
-                    <span>This is a beta feature - results may vary</span>
-                  </div>
-                </div>
               </form>
             </CardContent>
           </Card>
@@ -334,7 +238,6 @@ export default function ATSCheckerPage() {
           // Results Section
           <div className="space-y-6">
             {loading ? (
-              // Loading Card
               <Card className="text-center py-12 border-0 shadow-lg bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-900">
                 <CardContent className="flex flex-col items-center justify-center">
                   <div className="relative">
@@ -351,7 +254,6 @@ export default function ATSCheckerPage() {
                 </CardContent>
               </Card>
             ) : (
-              // Results Cards
               <>
                 {/* Score Card */}
                 <Card className="border-0 shadow-lg overflow-hidden">
@@ -378,11 +280,7 @@ export default function ATSCheckerPage() {
                         </div>
                         <Progress 
                           value={result?.score || 0} 
-                          className="h-3" 
-                          indicatorClassName={
-                            result?.score && result.score >= 80 ? "bg-green-500" : 
-                            result?.score && result.score >= 60 ? "bg-amber-400" : "bg-red-400"
-                          }
+                          className={`h-3 ${getProgressColor(result?.score || 0)}`} 
                         />
                       </div>
                     </div>
@@ -397,90 +295,50 @@ export default function ATSCheckerPage() {
                   </CardContent>
                 </Card>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Keywords Card */}
-                  <Card className="border-0 shadow-lg">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-lg">
-                        <div className="p-1 bg-green-100 rounded-full dark:bg-green-900/30">
-                          <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
-                        </div>
-                        Matched Keywords
-                      </CardTitle>
-                      <CardDescription>
-                        These keywords from your resume match common ATS criteria
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      {result?.keywords && result.keywords.length > 0 ? (
-                        <div className="flex flex-wrap gap-2">
-                          {result.keywords.map((keyword, idx) => (
-                            <span 
-                              key={idx} 
-                              className="px-3 py-1.5 bg-green-100 text-green-800 text-sm rounded-full border border-green-200 font-medium dark:bg-green-900/30 dark:text-green-300 dark:border-green-800/50"
-                            >
-                              {keyword}
-                            </span>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="text-sm text-muted-foreground">No keywords matched.</p>
-                      )}
-                    </CardContent>
-                  </Card>
+                {/* Keywords Card */}
+                <Card className="border-0 shadow-lg overflow-hidden">
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <FileText className="h-5 w-5 text-blue-600" />
+                      Matched Keywords
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-disc list-inside space-y-1 text-sm">
+                      {result?.keywords.map((kw, idx) => (
+                        <li key={idx}>{kw}</li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
 
-                  {/* Suggestions Card */}
-                  <Card className="border-0 shadow-lg">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="flex items-center gap-2 text-lg">
-                        <div className="p-1 bg-amber-100 rounded-full dark:bg-amber-900/30">
-                          <AlertCircle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
-                        </div>
-                        Improvement Suggestions
-                      </CardTitle>
-                      <CardDescription>
-                        Recommendations to improve your ATS compatibility
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      {result?.suggestions && result.suggestions.length > 0 ? (
-                        <ul className="space-y-3">
-                          {result.suggestions.map((suggestion, idx) => (
-                            <li key={idx} className="flex items-start gap-3 text-sm">
-                              <div className="p-0.5 bg-amber-100 rounded-full mt-0.5 dark:bg-amber-900/30">
-                                <div className="w-2 h-2 rounded-full bg-amber-500"></div>
-                              </div>
-                              <span>{suggestion}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="text-sm text-muted-foreground">Your resume looks good! No suggestions available.</p>
-                      )}
-                    </CardContent>
-                  </Card>
-                </div>
+                {/* Suggestions Card */}
+                <Card className="border-0 shadow-lg overflow-hidden">
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <Zap className="h-5 w-5 text-blue-600" />
+                      Suggestions for Improvement
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-disc list-inside space-y-1 text-sm">
+                      {result?.suggestions.map((sug, idx) => (
+                        <li key={idx}>{sug}</li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                  <CardContent className="pt-0">
+                    <Button onClick={handleDownloadReport} className="w-full flex items-center justify-center gap-2">
+                      <Download className="w-4 h-4" />
+                      Download Report
+                    </Button>
+                  </CardContent>
+                </Card>
 
-                {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <Button 
-                    onClick={resetForm} 
-                    variant="outline" 
-                    className="flex-1 py-3 gap-2"
-                    size="lg"
-                  >
-                    <ArrowLeft className="h-5 w-5" />
-                    Check Another Resume
-                  </Button>
-                  <Button 
-                    onClick={handleDownloadReport} 
-                    className="flex-1 py-3 gap-2" 
-                    size="lg"
-                  >
-                    <Download className="h-5 w-5" />
-                    Download Report
-                  </Button>
-                </div>
+                <Button onClick={resetForm} variant="outline" className="w-full flex items-center justify-center gap-2 mt-4">
+                  <ArrowLeft className="w-4 h-4" />
+                  Go Back
+                </Button>
               </>
             )}
           </div>
