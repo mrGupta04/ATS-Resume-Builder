@@ -127,19 +127,9 @@ Contributions are welcome! Please follow these steps:
    ```bash
    git push origin feature-name
    ```
-5. Open a pull request  
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
-
----
 
 ## 📞 Contact
 
 - 👨‍💻 Developer: **Aditya Gupta**  
-- 📧 Email: your-email@example.com  
-- 🐙 GitHub: [https://github.com/your-username](https://github.com/your-username)  
-- 🔗 LinkedIn: [https://linkedin.com/in/your-linkedin](https://linkedin.com/in/your-linkedin)  
+- 📧 Email: adiapa746103gupta@gmail.com 
+
