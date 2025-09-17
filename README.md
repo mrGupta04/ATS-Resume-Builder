@@ -1,78 +1,74 @@
-# ResumeItNow - Free & Open Source Resume Builder 🚀
+# 🚀 ATS Resume Builder
 
-<div align="center">
+![Project Badge](https://img.shields.io/badge/Project-ATS%20Resume%20Builder-blue) ![Status](https://img.shields.io/badge/Status-Active-brightgreen) 
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/maheshpaulj/ResumeItNow/issues)
-[![Stars](https://img.shields.io/github/stars/maheshpaulj/ResumeItNow?style=social)](https://github.com/maheshpaulj/ResumeItNow/stargazers)
+**ATS Resume Builder** is an AI-powered resume builder designed to help job seekers create professional, ATS-friendly resumes effortlessly. Enhance your resume content, check for ATS compatibility, and boost your chances of landing your dream job.  
 
-[Demo](https://resumeitnow.vercel.app) · [Report Bug](https://github.com/maheshpaulj/ResumeItNow/issues) · [Request Feature](https://github.com/maheshpaulj/ResumeItNow/issues)
-
-![ResumeItNow Preview](/public/assets/ss.png)
-
-</div>
-
-ResumeItNow is a free, open-source resume builder that helps job seekers create professional resumes without watermarks or hidden fees. Built with modern technologies and powered by AI, it offers a seamless experience for creating ATS-friendly resumes.
+---
 
 ## ✨ Features
 
-- 🎯 **ATS-Friendly Templates**: Professionally designed templates optimized for Applicant Tracking Systems
-- 🤖 **AI-Powered**: Smart content suggestions and auto-generation powered by Llama 3.1
-- 💳 **100% Free**: No credit card required, no hidden fees
-- 🎨 **Customizable**: Multiple layout options and customizable sections
-- 📱 **Responsive**: Works perfectly on desktop and mobile devices
-- 📤 **Export Options**: Download as PDF, share links, and more
+- **AI Text Enhancement**  
+  Improve your resume content with intelligent AI suggestions for grammar, phrasing, and professional impact.  
+
+- **ATS-Friendly Resume**  
+  Format your resume automatically to pass Applicant Tracking Systems (ATS) and reach recruiters effectively.  
+
+- **ATS Checker**  
+  Compare your resume with job descriptions to evaluate compatibility and highlight relevant skills.  
+
+- **Customizable Templates**  
+  Choose from multiple professional templates optimized for both humans and ATS.  
+
+- **Job Description Matching**  
+  Tailor your resume for each job by highlighting relevant experience and skills.  
+
+- **Easy Export**  
+  Export your resume in PDF or DOCX format for seamless applications.  
+
+---
 
 ## 🛠️ Tech Stack
 
-- [Next.js 14](https://nextjs.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [shadcn/ui](https://ui.shadcn.com/)
-- [Firebase](https://firebase.google.com/)
-- [Llama 3.1](https://llama.ai)
+- **Frontend:** React, Next.js, Tailwind CSS  
+- **Backend:** Node.js, Express  
+- **AI Integration:** OpenAI API for resume enhancement  
+- **PDF Generation:** Puppeteer  
+- **Authentication:** NextAuth.js  
 
-## 🤝 Contributing
+---
 
-We love contributions! There are many ways you can help improve ResumeItNow:
+## 🎯 How It Works
 
-### Adding New Resume Templates
+1. **Upload Your Resume** – Upload your existing resume in PDF or DOCX format.  
+2. **Enhance Text** – Use AI-powered suggestions to improve phrasing, grammar, and clarity.  
+3. **ATS Optimization** – Automatically format your resume for ATS compliance.  
+4. **Check Compatibility** – Match your resume against job descriptions to maximize ATS score.  
+5. **Download & Apply** – Export your polished resume in a ready-to-submit format.  
 
-1. Create a new template in the `components/resume/templates` directory
-2. I would recommend you to duplicate existing template and work over it.
-3. Add preview image in `public/assets/`
-4. Add template selection in `app/resume/[resumeId]/resumeView.tsx`
-   ```
-   <SelectItem value="template_name">Template Name</SelectItem>
-   ```
-5. Add the template like this
-   ```
-   const TEMPLATES = {
-     modern: ModernTemplate,
-     minimal: MinimalTemplate,
-     professional: ProfessionalTemplate,
-     newTemplate: NewTemplateImportName,
-   } as const;
-   ```
-6. Submit a pull request
+---
 
-### Template Guidelines
+## 🖼️ Screenshots
 
-- Must be ATS-friendly
-- Responsive design
-- Clean, professional layout
-- Support all standard resume sections
-- Follow accessibility best practices
-- Use Tailwind CSS for styling
+![Screenshot 1](path-to-your-screenshot1.png)  
+![Screenshot 2](path-to-your-screenshot2.png)  
 
-### Other Contributions
+---
 
-- 🐛 Fix bugs and issues
-- ✨ Add new features
-- 📝 Improve documentation
-- 🎨 Enhance UI/UX
-- ⚡ Optimize performance
-- 🌐 Add translations
+## ⚡ Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/ats-resume-builder.git
+
+# Navigate to project folder
+cd ats-resume-builder
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
 
 ### How to Contribute
 
