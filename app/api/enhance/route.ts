@@ -1,4 +1,3 @@
-// app/api/enhance/route.ts
 import { NextResponse } from "next/server";
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
@@ -24,7 +23,6 @@ export async function POST(req: Request) {
       Authorization: `Bearer ${OPENROUTER_API_KEY}`,
     };
 
-    // ✅ Required headers for OpenRouter
     if (process.env.NEXT_PUBLIC_URL) {
       headers["HTTP-Referer"] = process.env.NEXT_PUBLIC_URL;
     }
@@ -34,7 +32,7 @@ export async function POST(req: Request) {
       method: "POST",
       headers,
       body: JSON.stringify({
-        model: "openrouter/auto", // fallback-safe model
+        model: "openrouter/auto",
         messages: [
           {
             role: "system",
@@ -57,21 +55,17 @@ export async function POST(req: Request) {
     }
 
     const data = await response.json();
-
     const enhanced = data?.choices?.[0]?.message?.content;
+
     if (!enhanced) {
       throw new Error("Invalid response format from OpenRouter API");
     }
 
     return NextResponse.json({ enhanced });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("❌ Error in enhance API:", error);
-    return NextResponse.json(
-      {
-        error:
-          error instanceof Error ? error.message : "Failed to enhance description",
-      },
-      { status: 500 }
-    );
+    const message =
+      error instanceof Error ? error.message : "Failed to enhance description";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
