@@ -1,4 +1,4 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest } from "next/server";
 import puppeteer, { type Browser } from "puppeteer";
 import puppeteerCore, { type Browser as BrowserCore } from "puppeteer-core";
 import chromium from "@sparticuz/chromium-min";
@@ -11,15 +11,16 @@ export async function GET(request: NextRequest) {
 
   // Basic validation
   if (!searchParams.toString()) {
-    return NextResponse.json(
-      { message: "No query parameters provided" },
-      { status: 400 }
+    return new Response(
+      JSON.stringify({ message: "No query parameters provided" }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
     );
   }
 
   try {
     let browser: Browser | BrowserCore;
 
+    // ✅ Choose Puppeteer engine based on environment
     if (
       process.env.NODE_ENV === "production" ||
       process.env.VERCEL_ENV === "production"
@@ -42,18 +43,25 @@ export async function GET(request: NextRequest) {
 
     const page = await browser.newPage();
 
-    // Build resume URL with query params
-    const url = new URL(`${process.env.BASE_URL}/resume/download`);
+    // ✅ Correct BASE_URL handling
+    const baseUrl =
+      process.env.BASE_URL ||
+      process.env.VERCEL_URL ||
+      "http://localhost:3000"; // fallback for dev
+
+    const url = new URL(`${baseUrl}/resume/download`);
     url.search = searchParams.toString();
 
+    // Load resume page
     await page.goto(url.toString(), { waitUntil: "networkidle0" });
 
-    // Wait for resume content to load
+    // Ensure resume content exists
     await page.waitForSelector("#resume-content", {
       visible: true,
       timeout: 30000,
     });
 
+    // Generate PDF buffer
     const pdfBuffer = await page.pdf({
       format: "A4",
       printBackground: true,
@@ -67,10 +75,8 @@ export async function GET(request: NextRequest) {
 
     await browser.close();
 
-    // ✅ Convert Buffer to Uint8Array (safe BodyInit)
-    const pdfUint8Array = new Uint8Array(pdfBuffer);
-
-    return new NextResponse(pdfUint8Array, {
+    // ✅ Return PDF as Response
+    return new Response(pdfBuffer, {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
@@ -79,9 +85,12 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error("❌ PDF generation error:", error);
-    return NextResponse.json(
-      { message: "Error generating PDF", error: String(error) },
-      { status: 500 }
+    return new Response(
+      JSON.stringify({
+        message: "Error generating PDF",
+        error: String(error),
+      }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 }
