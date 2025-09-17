@@ -1,60 +1,77 @@
-// route.ts
-import { NextResponse } from 'next/server'
+// app/api/enhance/route.ts
+import { NextResponse } from "next/server";
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
-const API_URL = "https://openrouter.ai/api/v1/chat/completions"
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 if (!OPENROUTER_API_KEY) {
-  throw new Error('OPENROUTER_API_KEY is not defined in environment variables')
+  throw new Error("OPENROUTER_API_KEY is not defined in environment variables");
 }
 
 export async function POST(req: Request) {
   try {
-    const { description } = await req.json()
+    const { description } = await req.json();
+
+    if (!description || typeof description !== "string") {
+      return NextResponse.json(
+        { error: "Description is required" },
+        { status: 400 }
+      );
+    }
 
     const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-    }
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${OPENROUTER_API_KEY}`,
+    };
 
-    // Only add HTTP-Referer if NEXT_PUBLIC_URL is defined
+    // ✅ Required headers for OpenRouter
     if (process.env.NEXT_PUBLIC_URL) {
-      headers['HTTP-Referer'] = process.env.NEXT_PUBLIC_URL
+      headers["HTTP-Referer"] = process.env.NEXT_PUBLIC_URL;
     }
+    headers["X-Title"] = "Resume Enhancer";
 
     const response = await fetch(API_URL, {
-      method: 'POST',
+      method: "POST",
       headers,
       body: JSON.stringify({
-        model: "openrouter/cypher-alpha:free",
-        messages: [{
-          role: "system",
-          content: "You are a professional resume writer. Enhance the given description to be more impactful and professional while maintaining truthfulness."
-        }, {
-          role: "user",
-          content: `Please enhance this description to be more professional and impactful: ${description} . important: must only use bold(**) and bullet point(-) markdown only where ever necessary and dont use phrases like "here are..." or anything, just give the straight message. strictly under 450 characters.`
-        }]
-      })
-    })
+        model: "openrouter/auto", // fallback-safe model
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are a professional resume writer. Enhance the given description to be more impactful and professional while maintaining truthfulness.",
+          },
+          {
+            role: "user",
+            content: `Please enhance this description to be more professional and impactful: ${description}. Important: must only use bold(**) and bullet point(-) markdown where necessary, and avoid phrases like 'here are...'. Keep it under 450 characters.`,
+          },
+        ],
+      }),
+    });
 
     if (!response.ok) {
-      throw new Error(`OpenRouter API responded with status: ${response.status}`)
+      const errText = await response.text();
+      throw new Error(
+        `OpenRouter API responded with status: ${response.status}, body: ${errText}`
+      );
     }
 
-    const data = await response.json()
-    
-    if (!data.choices?.[0]?.message?.content) {
-      throw new Error('Invalid response format from OpenRouter API')
+    const data = await response.json();
+
+    const enhanced = data?.choices?.[0]?.message?.content;
+    if (!enhanced) {
+      throw new Error("Invalid response format from OpenRouter API");
     }
 
-    return NextResponse.json({ 
-      enhanced: data.choices[0].message.content 
-    })
-  } catch (error) {
-    console.error('Error in enhance API:', error)
+    return NextResponse.json({ enhanced });
+  } catch (error: any) {
+    console.error("❌ Error in enhance API:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to enhance description' },
+      {
+        error:
+          error instanceof Error ? error.message : "Failed to enhance description",
+      },
       { status: 500 }
-    )
+    );
   }
 }

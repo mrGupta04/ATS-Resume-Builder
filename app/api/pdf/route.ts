@@ -1,4 +1,4 @@
-import { type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import puppeteer, { type Browser } from "puppeteer";
 import puppeteerCore, { type Browser as BrowserCore } from "puppeteer-core";
 import chromium from "@sparticuz/chromium-min";
@@ -11,21 +11,27 @@ export async function GET(request: NextRequest) {
 
   // Basic validation
   if (!searchParams.toString()) {
-    return new Response(
-      JSON.stringify({ message: "No query parameters provided" }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
+    return NextResponse.json(
+      { message: "No query parameters provided" },
+      { status: 400 }
     );
   }
 
   try {
     let browser: Browser | BrowserCore;
 
-    // ✅ Choose Puppeteer engine based on environment
-    if (
-      process.env.NODE_ENV === "production" ||
-      process.env.VERCEL_ENV === "production"
-    ) {
-      const executablePath = await chromium.executablePath();
+    if (process.env.NODE_ENV === "production") {
+      console.log("🚀 Launching Chromium in production...");
+
+      // Try resolving executable path automatically
+      let executablePath = await chromium.executablePath();
+
+      if (!executablePath) {
+        console.warn(
+          "⚠️ chromium.executablePath() returned null, falling back to /var/task/chromium"
+        );
+        executablePath = "/var/task/chromium";
+      }
 
       browser = await puppeteerCore.launch({
         args: chromium.args,
@@ -34,7 +40,7 @@ export async function GET(request: NextRequest) {
         headless: chromium.headless,
       });
     } else {
-      console.log("🚀 Launching Puppeteer in development mode");
+      console.log("💻 Launching Puppeteer in development mode...");
       browser = await puppeteer.launch({
         headless: true,
         args: ["--no-sandbox", "--disable-setuid-sandbox"],
@@ -43,25 +49,25 @@ export async function GET(request: NextRequest) {
 
     const page = await browser.newPage();
 
-    // ✅ Correct BASE_URL handling
-    const baseUrl =
-      process.env.BASE_URL ||
-      process.env.VERCEL_URL ||
-      "http://localhost:3000"; // fallback for dev
+    // ✅ Ensure BASE_URL is set
+    if (!process.env.BASE_URL) {
+      throw new Error("BASE_URL is not defined in environment variables.");
+    }
 
-    const url = new URL(`${baseUrl}/resume/download`);
+    // Build resume URL with query params
+    const url = new URL(`${process.env.BASE_URL}/resume/download`);
     url.search = searchParams.toString();
 
-    // Load resume page
+    console.log("🌐 Navigating to:", url.toString());
+
     await page.goto(url.toString(), { waitUntil: "networkidle0" });
 
-    // Ensure resume content exists
+    // Wait for resume content to load
     await page.waitForSelector("#resume-content", {
       visible: true,
       timeout: 30000,
     });
 
-    // Generate PDF buffer
     const pdfBuffer = await page.pdf({
       format: "A4",
       printBackground: true,
@@ -75,22 +81,21 @@ export async function GET(request: NextRequest) {
 
     await browser.close();
 
-    // ✅ Return PDF as Response
-    return new Response(pdfBuffer, {
+    // Convert Buffer to Uint8Array (safe BodyInit)
+    const pdfUint8Array = new Uint8Array(pdfBuffer);
+
+    return new NextResponse(pdfUint8Array, {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": `attachment; filename=resume.pdf`,
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("❌ PDF generation error:", error);
-    return new Response(
-      JSON.stringify({
-        message: "Error generating PDF",
-        error: String(error),
-      }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
+    return NextResponse.json(
+      { message: "Error generating PDF", error: String(error) },
+      { status: 500 }
     );
   }
 }
