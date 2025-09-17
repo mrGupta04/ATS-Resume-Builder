@@ -6,6 +6,13 @@
 
 ---
 
+## 🔗 Live Demo
+
+👉 [View Live Project](https://ats-resume-builder-two.vercel.app/)
+
+
+---
+
 ## ✨ Features
 
 - **AI Text Enhancement**  
@@ -40,22 +47,33 @@
 
 ## 🎯 How It Works
 
-1. **Upload Your Resume** – Upload your existing resume in PDF or DOCX format.  
-2. **Enhance Text** – Use AI-powered suggestions to improve phrasing, grammar, and clarity.  
-3. **ATS Optimization** – Automatically format your resume for ATS compliance.  
-4. **Check Compatibility** – Match your resume against job descriptions to maximize ATS score.  
-5. **Download & Apply** – Export your polished resume in a ready-to-submit format.  
+1. **Enhance Text** – Use AI-powered suggestions to improve phrasing, grammar, and clarity.  
+2. **ATS Optimization** – Automatically format your resume for ATS compliance.  
+3. **Check Compatibility** – Match your resume against job descriptions to maximize ATS score.
+4.  **Download & Apply** – Export your polished resume in a ready-to-submit format.  
 
 ---
-
-## 🖼️ Screenshots
-
-![Screenshot 1](path-to-your-screenshot1.png)  
-![Screenshot 2](path-to-your-screenshot2.png)  
-
----
-
 ## ⚡ Installation
+# 📝 ATS Resume Builder
+
+[![GitHub stars](https://img.shields.io/github/stars/your-username/ats-resume-builder?style=social)](https://github.com/your-username/ats-resume-builder/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/your-username/ats-resume-builder?style=social)](https://github.com/your-username/ats-resume-builder/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/your-username/ats-resume-builder)](https://github.com/your-username/ats-resume-builder/issues)
+[![GitHub license](https://img.shields.io/github/license/your-username/ats-resume-builder)](LICENSE)
+
+An AI-powered tool to create **ATS-friendly resumes** with smart text enhancements, resume checking, and optimization features. Perfect for job seekers who want to maximize their chances of getting noticed by Applicant Tracking Systems (ATS).
+
+
+## ⚡ Features
+- ✅ AI Text Enhancement for better phrasing  
+- 📂 Upload and parse resumes in PDF format  
+- 🛠 ATS Checker to test resume compatibility  
+- 📑 Generate optimized, ATS-friendly resumes  
+- 📥 Download enhanced resumes instantly  
+
+---
+
+## 🚀 Installation
 
 ```bash
 # Clone the repository
@@ -69,30 +87,59 @@ npm install
 
 # Start the development server
 npm run dev
-
-### How to Contribute
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- [shadcn/ui](https://ui.shadcn.com/) for the beautiful UI components
-- [Lucide Icons](https://lucide.dev/) for the icons
-
-## 💌 Contact
-
-- Website: [resumeitnow.com](https://resumeitnow.vercel.app)
+```
 
 ---
 
-<div align="center">
-  <sub>Built with ❤️</sub>
-</div>
+## 📌 Usage
+
+1. Open the app: [http://localhost:3000](http://localhost:3000)  
+2. Sign up or log in to your account.  
+3. Upload your resume and optionally the job description.  
+4. Use **AI enhancements** and **ATS checker** features.  
+5. Download your optimized resume and start applying.  
+
+---
+
+## 📈 Future Enhancements
+- 📊 Resume analytics with scoring and feedback  
+- 🔗 LinkedIn profile integration  
+- ✍️ AI-generated cover letters  
+- 🌍 Multi-language support  
+- 🌓 Dark/Light mode interface  
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository  
+2. Create a new branch:  
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:  
+   ```bash
+   git commit -m "Add feature"
+   ```
+4. Push to your branch:  
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a pull request  
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for details.
+
+---
+
+## 📞 Contact
+
+- 👨‍💻 Developer: **Aditya Gupta**  
+- 📧 Email: your-email@example.com  
+- 🐙 GitHub: [https://github.com/your-username](https://github.com/your-username)  
+- 🔗 LinkedIn: [https://linkedin.com/in/your-linkedin](https://linkedin.com/in/your-linkedin)  
